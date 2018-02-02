@@ -1,8 +1,8 @@
-feeMaker = 0.25
+feeMaker = 0.0
 feeTaker = 0.25
-feeUsing = 'maker'
-slippage = 0.05
+feeUsing = 'taker'
+slippage = 0
 
 [simulationBalance]
-asset = 1
-currency = 100
+asset = 0
+currency = 1000

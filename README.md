@@ -10,6 +10,21 @@ Gekko is a Bitcoin TA trading and backtesting platform that connects to popular 
 
 *Use Gekko at your own risk.*
 
+## To run
+
+First time
+```shell
+> cp .env.sample .env
+> chmod +x docker-entrypoint.sh
+> # uncomment `command: npm install` in docker-compose.yml
+> docker-compose up
+```
+
+Then
+```shell
+> docker-compose up -d
+```
+
 ## Documentation
 
 See [the documentation website](https://gekko.wizb.it/docs/introduction/about_gekko.html).
