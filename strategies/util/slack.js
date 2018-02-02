@@ -5,6 +5,6 @@ const webhook = process.env.SLACK_WEBHOOK_TRADEBOT
 
 module.exports = {
   notify: (text) => {
-    fetch(webhook, {method: 'POST', body: JSON.stringify({text})}).then(console.log).catch(console.error)
+    fetch(webhook, {method: 'POST', body: JSON.stringify({text})}).catch(console.error)
   }
 }
