@@ -52,6 +52,10 @@ strat.aggregateCandle = function(candle) {
 // What happens on every new candle?
 strat.update = function(candle) {
   this.aggregateCandle(candle)
+  if (!this.firstCandle) {
+    this.firstCandle = candle
+    this.notify(`[Gekko] Received first candle at ${candle.start}`)
+  }
 }
 
 // For debugging purposes.
@@ -90,9 +94,8 @@ strat.notify = function(text) {
   const {slackNotification = false} = this.settings
   if (slackNotification) {
     Slack.notify(text)
-  } else {
-    log.debug(text)
   }
+  log.debug(text)
 }
 
 function getVixFix ({closes, highs, lows}, type = 'bottom', options = {}) {

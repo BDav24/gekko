@@ -32,7 +32,7 @@ var Trader = function(config) {
     this.pair = [config.asset, config.currency].join('-').toUpperCase();
     this.post_only =
       typeof config.post_only !== 'undefined' ? config.post_only : true;
-    
+
     if (config.sandbox) {
       this.use_sandbox = config.sandbox;
     }
@@ -81,7 +81,7 @@ Trader.prototype.processError = function(funcName, error) {
     );
     return new Errors.AbortError('[gdax.js] ' + error.message);
   }
- 
+
   log.debug(
     `[gdax.js] (${funcName}) returned an error, retrying: ${error.message}`
   );
@@ -149,6 +149,7 @@ Trader.prototype.buy = function(amount, price, callback) {
   };
 
   var result = (err, data) => {
+    console.log(err, data)
     if (err) return callback(err);
     callback(undefined, data.id);
   };
@@ -167,6 +168,7 @@ Trader.prototype.sell = function(amount, price, callback) {
   };
 
   var result = function(err, data) {
+    console.log(err, data)
     if (err) return callback(err);
     callback(undefined, data.id);
   };
