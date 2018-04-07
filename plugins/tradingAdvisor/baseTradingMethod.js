@@ -80,6 +80,9 @@ var Base = function(settings) {
   if(!this.end)
     this.end = function() {};
 
+  if(!this.onTrade)
+    this.onTrade = function() {};
+
   // let's run the implemented starting point
   this.init();
 
@@ -255,6 +258,10 @@ Base.prototype.propogateTick = function(candle) {
     this.finishCb();
 }
 
+Base.prototype.processTrade = function(trade) {
+  this.onTrade(trade);
+}
+
 Base.prototype.addTalibIndicator = function(name, type, parameters) {
   if(!talib)
     util.die('Talib is not enabled');
@@ -298,7 +305,7 @@ Base.prototype.addIndicator = function(name, type, parameters) {
   if(this.setup)
     util.die('Can only add indicators in the init method!');
 
-  this.indicators[name] = new Indicators[type](parameters);
+  return this.indicators[name] = new Indicators[type](parameters);
 
   // some indicators need a price stream, others need full candles
 }
@@ -321,13 +328,11 @@ Base.prototype.advice = function(newPosition, _candle) {
 
   this._prevAdvice = newPosition;
 
-  _.defer(function() {
-    this.emit('advice', {
-      recommendation: newPosition,
-      portfolio: 1,
-      candle
-    });
-  }.bind(this));
+  this.emit('advice', {
+    recommendation: newPosition,
+    portfolio: 1,
+    candle
+  });
 }
 
 // Because the trading method might be async we need
